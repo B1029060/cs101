@@ -40,12 +40,33 @@ int get_counter() {
     return read_array[0];
 }
 void do_lotto_main(int counter) {
+    char szbuff[32];
+    lotto_record_t memo;
+    memo.lotto_no = counter + 1;
     char lotto_file[32];
-    int num_set = 0;
+    int num_set = 0, id = 0;
+    time_t now = time(0);
+    strftime(szbuff, 100, "%Y%m%d-%H:%M:%S", localtime(&now));
+    for (int i = 0; i <= sizeof(szbuff); i++) {
+        if (i <= 7) {
+            memo.lotto_date[i] = szbuff[i];
+        } else if (i >= 9) {
+            memo.lotto_time[i-10] = szbuff[i];
+        }
+    }
     snprintf(lotto_file, 32, "lotto[%05d].txt", counter);
     printf("歡迎光臨長庚樂透購買機台\n");
+    printf("請問您的員工編號是: \n");
+    scanf("%d", &id);
+    memo.emp_id = &id;
+    if (memo.emp_id == 0) {
+        record(memo.emp_id);
+    }
     printf("請問您要買幾組樂透彩: ");
     scanf("%d", &num_set);
+    int tmp = &num_set;
+    memo.lotto_receipt = tmp * 55;
+    record_t(memo.lotto_no, memo.lotto_receipt, memo.emp_id, memo.lotto_date[16], memo.lotto_time[16]);
     print_lotto_file(num_set, counter, lotto_file);
     printf("已為您購買的%d組樂透組合輸出至 %s\n", num_set, lotto_file);
 }
@@ -118,45 +139,49 @@ void set_counter(int counter) {
     fwrite(write_array, sizeof(int), 1, tmpfp);
     fclose(tmpfp);
 }
-void record(int id, char name[16], int salary) {
+void record(int id) {
+    emp_record_t rec;
+    int salary;
     int write_id_array[1] = id;
     char write_name_array[16];
-    int write_salary_array[8] = salary;
-    if(id == 0) {
-        for (int i = 0; i <= sizeof(name); i++) {
-            write_name_array[i] = name[i];
-        }
-        FILE* fp = fopen(EMP_RECORD, "ab");
-        fwrite(write_id_array, sizeof(write_id_array), 1, fp);
-        fwrite(write_name_array, sizeof(write_salary_array), 1, fp);
-        fwrite(write_salary_array, sizeof(write_salary_array), 1, fp);
-        fclose(fp);
+    rec.emp_id = id;
+    printf("請輸入員工名稱");
+    scanf("%15s", rec.emp_name);
+    printf("請輸入員工月薪");
+    scanf("%d", &salary);
+    rec.emp_salary = &salary;
+    int write_salary_array[8] = rec.emp_salary;
+    for (int i = 0; i <= sizeof(rec.emp_name); i++) {
+        write_name_array[i] = rec.emp_name[i];
     }
+    FILE* tmpfp = fopen(EMP_RECORD, "ab");
+    fwrite(write_id_array, sizeof(write_id_array), 1, tmpfp);
+    fwrite(write_name_array, sizeof(write_salary_array), 1, tmpfp);
+    fwrite(write_salary_array, sizeof(write_salary_array), 1, tmpfp);
+    fclose(tmpfp);
 }
 void record_t(int lotto_no, int lotto_receipt, int emp_id, char lotto_date[16], char lotto_time[16]) {
-    char szbuff[32];
-    time_t now = time(0);
-    strftime(szbuff, 100, "%Y%m%d", localtime(&now));
-    for (int i = 0; i <= sizeof(szbuff); i++) {
-        lotto_date[i] = szbuff[i];
+    int write_no[8] = lotto_no;
+    int write_receipt[8] = lotto_receipt;
+    int write_id[1] = emp_id;
+    char write_date[16];
+    char write_time[16];
+    for (int i = 0; i <= 16; i++) {
+        write_date[i] = lotto_date[i];
+        write_time[i] = lotto_time[i];
     }
-    strftime(szbuff, 100, "%H%M%S", localtime(&now));
-    for (int i = 0; i <= sizeof(szbuff); i++) {
-        lotto_time[i] = szbuff[i];
-    }
+    FILE* fp = fopen(RECORD_FILE, "ab");
+    fwrite(write_no, sizeof(write_no), 1, fp);
+    fwrite(write_receipt, sizeof(write_receipt), 1, fp);
+    fwrite(write_id, sizeof(write_id), 1, fp);
+    fwrite(write_date, sizeof(write_date), 1, fp);
+    fwrite(write_time, sizeof(write_time), 1, fp);
+    fclose(fp);
 }
-typedef struct lotto_record_t {
-    int lotto_no;
-    int lotto_receipt;
-    int emp_id;
-    char lotto_date[16];
-    char lotto_time[16];
-} lotto_record_t;
 int main() {
     int counter;
     init_file();
     counter = get_counter();
-    printf("counter = %d", counter);
     do_lotto_main(++counter);
     set_counter(counter);
     return 0;
