@@ -17,12 +17,15 @@ int main(void) {
   assert(fp2 != NULL);
   for (i = 0; i < 20; i++) {
       fputc('2', fp2);
-  }      
+  }     
+  while ((c = fgetc(fp2)) != EOF) {
+      fputc(c, stdout);
+  }
   fclose(fp2);
 
   fp1 = fopen("file1", "r");
   assert(fp1 != NULL);
-  fp2 = fopen("file2", "w");
+  fp2 = fopen("file2", "a");
   assert(fp2 != NULL);
 
   while ((c = fgetc(fp1)) != EOF) {
