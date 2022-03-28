@@ -21,6 +21,6 @@ int main() {
     hanoi(HEIGHT, 'A', 'B', 'C');
     end = clock();
     cost = (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Time cost: %d\n", cost);
+    printf("Time cost: %lf\n", cost);
     return 0;
 }
