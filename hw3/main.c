@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define HEIGHT 16
+#define HEIGHT 40
 
 void hanoi(int n, char A, char B, char C) {
     if(n == 1) {
