@@ -61,9 +61,9 @@ void do_lotto_main(int counter) {
     rec.no = counter;
     rec.receipt = 55 * num_set;
     rec.id = ope_id;
-    strftime(rec.date, 8, "%Y%m%d", localtime(&now));
-    strftime(rec.time, 8, "%H:%M:%S", localtime(&now));
-    FILE* cfp = fopen(RECORD_FILE, "a");
+    strftime(rec.date, 9, "%Y%m%d", localtime(&now));
+    strftime(rec.time, 9, "%H:%M:%S", localtime(&now));
+    FILE* cfp = fopen(RECORD_FILE, "a+");
     fwrite(&rec, sizeof(rec), 1, cfp);
     fclose(cfp);
 }
