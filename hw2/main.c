@@ -4,28 +4,29 @@
 #include <string.h>
 
 #define COUNTER_FILE "counter.bin"
+#define OPERATOR_FILE "operator_id.bin"
 #define RECORD_FILE "records.bin"
-#define EMP_RECORD "operator_id.bin"
 #define MAX_LOTTO_NUM 7
 #define MAX_LOTTO_NUMSET 5
 
-typedef struct lotto_record_t {
-    int lotto_no;
-    int lotto_receipt;
-    int emp_id;
-    char lotto_date[16];
-    char lotto_time[16];
+typedef struct lotto_record {
+    int no;
+    int receipt;
+    int id;
+    char date[16];
+    char time[16];
 } lotto_record_t;
-typedef struct emp_record_t {
-    int emp_id;
-    char emp_name[16];
-    int emp_salary;
+typedef struct emp_record {
+    int id;
+    char name[16];
+    int salary;
 } emp_record_t;
 void init_file() {
-    int write_array[1] = {0};
     FILE* fp = fopen(COUNTER_FILE, "r");
+    int write_array[1];
+    write_array[0] = 0;
     if (fp == NULL) {
-        FILE* tmpfp = fopen(COUNTER_FILE, "wb+");
+        FILE* tmpfp = fopen(COUNTER_FILE, "wb");
         fwrite(write_array, sizeof(int), 1, tmpfp);
         fclose(tmpfp);
     } else {
@@ -34,63 +35,112 @@ void init_file() {
 }
 int get_counter() {
     int read_array[1];
-    FILE* tmpfp = fopen(COUNTER_FILE, "rb");
-    fread(read_array, sizeof(int), 1, tmpfp);
-    fclose(tmpfp);
+    FILE* fpg = fopen(COUNTER_FILE, "rb");
+    fread(read_array, sizeof(int), 1, fpg);
+    fclose(fpg);
     return read_array[0];
 }
+    
 void do_lotto_main(int counter) {
-    char szbuff[32];
-    lotto_record_t memo;
-    memo.lotto_no = counter + 1;
-    char lotto_file[32];
-    int num_set = 0, id = 0;
+    int lotto_file[20];
+    int ope_id = 0;
+    int num_set = 0;
+    int balan = 0;
+    char c;
+    lotto_record_t rec;
+    emp_record_t emp;
     time_t now = time(0);
-    strftime(szbuff, 100, "%Y%m%d-%H:%M:%S", localtime(&now));
-    for (int i = 0; i <= sizeof(szbuff); i++) {
-        if (i <= 7) {
-            memo.lotto_date[i] = szbuff[i];
-        } else if (i >= 9) {
-            memo.lotto_time[i-10] = szbuff[i];
+    snprintf(lotto_file, 20, "lotto[%05d].txt", counter);
+    printf("歡迎光臨長庚樂透購買機台\n");
+    printf("請輸入操作人員id(0-5): \n");
+    scanf("%d", &ope_id);
+    while (ope_id > 5 || ope_id < 0) {
+        balan++;
+        printf("id輸入錯誤，請重新輸入\n");
+        printf("請輸入操作人員id(0-5): \n");
+        scanf("%d", &ope_id);
+        if (balan == 3) {
+            printf("輸錯次數達到3次，結束程式");
+            exit(0);
         }
     }
-    snprintf(lotto_file, 32, "lotto[%05d].txt", counter);
-    printf("歡迎光臨長庚樂透購買機台\n");
-    printf("請問您的員工編號是: \n");
-    scanf("%d", &id);
-    memo.emp_id = &id;
-    if (memo.emp_id == 0) {
-        record(memo.emp_id);
+    if (ope_id == 0) {
+        printf("請輸入要新增操作人員 ID(1-99): \n");
+        scanf("%d", &emp.id);
+        printf("請輸入要新增操作人員 Name: \n");
+        scanf("%s", emp.name);
+        printf("請輸入要新增操作人員 Salary: \n");
+        scanf("%d", emp.salary);
+        FILE* rfp = fopen(RECORD_FILE, "ab");
+        fwrite(&emp, sizeof(emp), 1, rfp);
+        fclose(rfp);
+        printf("程式結束...");
+        exit(0);
     }
-    printf("請問您要買幾組樂透彩: ");
+    printf("請問您要買幾單樂透彩(1-5): ");
     scanf("%d", &num_set);
-    int tmp = &num_set;
-    memo.lotto_receipt = tmp * 55;
-    record_t(memo.lotto_no, memo.lotto_receipt, memo.emp_id, memo.lotto_date[16], memo.lotto_time[16]);
-    print_lotto_file(num_set, counter, lotto_file);
-    printf("已為您購買的%d組樂透組合輸出至 %s\n", num_set, lotto_file);
+    print_lottofile(num_set, counter, lotto_file);
+    print_lottofile_id(num_set, counter, ope_id);
+    printf("已為您購買的%d單樂透組合輸出至 %s\n", num_set, lotto_file);
+    rec.no = counter;
+    rec.receipt = 55 * num_set;
+    rec.id = ope_id;
+    strftime(rec.date, 9, "%Y%m%d", localtime(&now));
+    strftime(rec.time, 9, "%H:%M:%S", localtime(&now));
+    FILE* cfp = fopen(RECORD_FILE, "ab");
+    fwrite(&rec, sizeof(rec), 1, cfp);
+    fclose(cfp);
 }
-void print_lotto_file(int num_set, int counter, char lotto_file[]) {
+
+void print_lottofile(int num_set, int counter, char lotto_file[]) {
     time_t curtime;
     time(&curtime);
     srand(time(0));
+
     FILE* tmpfp = fopen(lotto_file, "w+");
     fprintf(tmpfp, "========= lotto649 =========\n");
     fprintf(tmpfp, "========+ No.%05d +========\n", counter);
-    for (int i=0; i<MAX_LOTTO_NUMSET; i++) {
-        if (i<num_set) {
-            print_lotto_row(tmpfp, i+1);
-        } else {
-            fprintf(tmpfp, "[%d]: -- -- -- -- -- -- --\n", i+1);
+    fprintf(tmpfp, "= %.*s =\n", 24, ctime(&curtime));
+    for (int j=0; j<num_set; j++) {
+        for (int i=0; i<MAX_LOTTO_NUMSET; i++) {
+            if (i<5) {
+                print_lotto_row(tmpfp, i+1);
+            } else {
+                fprintf(tmpfp, "[%d]: -- -- -- -- -- -- --\n", i+1);
+            }
         }
+    fprintf(tmpfp, "============================\n");    
+    }
+    fprintf(tmpfp, "========= csie@CGU =========\n");
+    fclose(tmpfp);
+}
+void print_lottofile_id(int num_set, int counter, int id) {
+    time_t curtime;
+    time(&curtime);
+    srand(time(0));
+
+    FILE* tmpfp = fopen(OPERATOR_FILE, "w+");
+    fprintf(tmpfp, "========= lotto649 =========\n");
+    fprintf(tmpfp, "========+ No.%05d +========\n", counter);
+    fprintf(tmpfp, "= %.*s =\n", 24, ctime(&curtime));
+    for (int j=0; j<num_set; j++) {
+        for (int i=0; i<MAX_LOTTO_NUMSET; i++) {
+            if (i<5) {
+                print_lotto_row(tmpfp, i+1);
+            } else {
+                fprintf(tmpfp, "[%d]: -- -- -- -- -- -- --\n", i+1);
+            }
+        }
+    fprintf(tmpfp, "========= Op.%05d =========\n", id);    
     }
     fprintf(tmpfp, "========= csie@CGU =========\n");
     fclose(tmpfp);
 }
 void print_lotto_row(FILE* tmpfp, int n) {
     int numset[MAX_LOTTO_NUM];
-    fprintf(tmpfp, "[%d]: ", n);
-    for (int i = 0; i<MAX_LOTTO_NUM-1; i++) {
+
+    fprintf(tmpfp, "[%d]: ",n);
+    for (int i = 0; i<MAX_LOTTO_NUM-1;) {
         int num = (rand() % 69) + 1;
         if (num_in_numset(num, numset, MAX_LOTTO_NUM-1)) {
             continue;
@@ -118,10 +168,11 @@ void print_lotto_row(FILE* tmpfp, int n) {
         }
     }
     for (int i = 0; i<MAX_LOTTO_NUM; i++) {
-        fprintf(tmpfp, "%02d", numset[i]);
+        fprintf(tmpfp, "%02d ", numset[i]);
     }
     fprintf(tmpfp, "\n");
 }
+
 int num_in_numset(int num, int numset[], int Len) {
     int ret = 0;
     for (int i = 0; i < Len; i++) {
@@ -132,51 +183,14 @@ int num_in_numset(int num, int numset[], int Len) {
     }
     return ret;
 }
+
 void set_counter(int counter) {
     int write_array[1];
     write_array[0] = counter;
-    FILE* tmpfp = fopen(COUNTER_FILE, "wb");
+    FILE* tmpfp;
+    tmpfp = fopen(COUNTER_FILE, "wb");
     fwrite(write_array, sizeof(int), 1, tmpfp);
     fclose(tmpfp);
-}
-void record(int id) {
-    emp_record_t rec;
-    int salary;
-    int write_id_array[1] = id;
-    char write_name_array[16];
-    rec.emp_id = id;
-    printf("請輸入員工名稱");
-    scanf("%15s", rec.emp_name);
-    printf("請輸入員工月薪");
-    scanf("%d", &salary);
-    rec.emp_salary = &salary;
-    int write_salary_array[8] = rec.emp_salary;
-    for (int i = 0; i <= sizeof(rec.emp_name); i++) {
-        write_name_array[i] = rec.emp_name[i];
-    }
-    FILE* tmpfp = fopen(EMP_RECORD, "ab");
-    fwrite(write_id_array, sizeof(write_id_array), 1, tmpfp);
-    fwrite(write_name_array, sizeof(write_salary_array), 1, tmpfp);
-    fwrite(write_salary_array, sizeof(write_salary_array), 1, tmpfp);
-    fclose(tmpfp);
-}
-void record_t(int lotto_no, int lotto_receipt, int emp_id, char lotto_date[16], char lotto_time[16]) {
-    int write_no[8] = lotto_no;
-    int write_receipt[8] = lotto_receipt;
-    int write_id[1] = emp_id;
-    char write_date[16];
-    char write_time[16];
-    for (int i = 0; i <= 16; i++) {
-        write_date[i] = lotto_date[i];
-        write_time[i] = lotto_time[i];
-    }
-    FILE* fp = fopen(RECORD_FILE, "ab");
-    fwrite(write_no, sizeof(write_no), 1, fp);
-    fwrite(write_receipt, sizeof(write_receipt), 1, fp);
-    fwrite(write_id, sizeof(write_id), 1, fp);
-    fwrite(write_date, sizeof(write_date), 1, fp);
-    fwrite(write_time, sizeof(write_time), 1, fp);
-    fclose(fp);
 }
 int main() {
     int counter;
