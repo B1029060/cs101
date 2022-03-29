@@ -54,9 +54,9 @@ void print_lottofile(int num_set, int counter, char lotto_file[]) {
             } else {
                 fprintf(tmpfp, "[%d]: --\t--\t--\t--\t--\t--\t--\n", i+1);
             }
+            if (j+1 == num_set && i == 5) {
+            fprintf(tmpfp, "============================\n");
         }
-        if (j+1 == num_set) {
-            fprintf(tmpfp, "==================\n");
         }
     }
     fprintf(tmpfp, "========= csie@CGU =========\n");
