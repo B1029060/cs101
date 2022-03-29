@@ -19,7 +19,7 @@ typedef struct lotto_record {
 typedef struct emp_record {
     int id;
     char name[16];
-    int salary;
+    int salary[8];
 } emp_record_t;
 void init_file() {
     FILE* fp = fopen(COUNTER_FILE, "r");
