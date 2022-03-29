@@ -32,10 +32,10 @@ void do_lotto_main(int counter) {
     int num_set = 0;
     snprintf(lotto_file, 20, "lotto[%05d].txt", counter);
     printf("歡迎光臨長庚樂透購買機台\n");
-    printf("請問您要買幾組樂透彩: ");
+    printf("請問您要買幾單樂透彩: ");
     scanf("%d", &num_set);
     print_lottofile(num_set, counter, lotto_file);
-    printf("已為您購買的%d組樂透組合輸出至 %s\n", num_set, lotto_file);
+    printf("已為您購買的%d單樂透組合輸出至 %s\n", num_set, lotto_file);
 }
 
 void print_lottofile(int num_set, int counter, char lotto_file[]) {
@@ -52,7 +52,7 @@ void print_lottofile(int num_set, int counter, char lotto_file[]) {
             if (i<5) {
                 print_lotto_row(tmpfp, i+1);
             } else {
-                fprintf(tmpfp, "[%d]: --\t--\t--\t--\t--\t--\t--\n", i+1);
+                fprintf(tmpfp, "[%d]: -- -- -- -- -- -- --\n", i+1);
             }
             if (j+1 == num_set && i == 5) {
             fprintf(tmpfp, "============================\n");
@@ -95,7 +95,7 @@ void print_lotto_row(FILE* tmpfp, int n) {
         }
     }
     for (int i = 0; i<MAX_LOTTO_NUM; i++) {
-        fprintf(tmpfp, "%02d", numset[i]);
+        fprintf(tmpfp, "%02d\t", numset[i]);
     }
     fprintf(tmpfp, "\n");
 }
