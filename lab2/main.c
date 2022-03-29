@@ -63,7 +63,7 @@ void do_lotto_main(int counter) {
     rec.id = ope_id;
     strftime(rec.date, 9, "%Y%m%d", localtime(&now));
     strftime(rec.time, 9, "%H:%M:%S", localtime(&now));
-    FILE* cfp = fopen(RECORD_FILE, "a+");
+    FILE* cfp = fopen(RECORD_FILE, "ab");
     fwrite(&rec, sizeof(rec), 1, cfp);
     fclose(cfp);
 }
