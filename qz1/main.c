@@ -95,7 +95,7 @@ void print_lotto_row(FILE* tmpfp, int n) {
         }
     }
     for (int i = 0; i<MAX_LOTTO_NUM; i++) {
-        fprintf(tmpfp, "%02d\t", numset[i]);
+        fprintf(tmpfp, "%02d ", numset[i]);
     }
     fprintf(tmpfp, "\n");
 }
