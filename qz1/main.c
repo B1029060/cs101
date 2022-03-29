@@ -55,6 +55,7 @@ void print_lottofile(int num_set, int counter, char lotto_file[]) {
                 fprintf(tmpfp, "[%d]: -- -- -- -- -- -- --\n", i+1);
             }
         }
+    fprintf(tmpfp, "============================\n");    
     }
     fprintf(tmpfp, "========= csie@CGU =========\n");
     fclose(tmpfp);
@@ -93,9 +94,6 @@ void print_lotto_row(FILE* tmpfp, int n) {
     }
     for (int i = 0; i<MAX_LOTTO_NUM; i++) {
         fprintf(tmpfp, "%02d ", numset[i]);
-        if (i == 6) {
-            fprintf(tmpfp, "============================\n");
-        }
     }
     fprintf(tmpfp, "\n");
 }
