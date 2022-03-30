@@ -17,7 +17,7 @@ typedef struct lotto_record {
     char time[16];
 } lotto_record_t;
 typedef struct emp_record {
-    int emp_id[2];
+    int emp_id;
     char emp_name[16];
     int emp_salary[8];
 } emp_record_t;
@@ -67,7 +67,11 @@ void do_lotto_main(int counter) {
     }
     if (ope_id == 0) {
         printf("請輸入要新增操作人員 ID(1-99):\n");
-        scanf("%d\n", empr.emp_id);
+        scanf("%d\n", &empr.emp_id);
+        if (empr.emp_id > 99) {
+            printf("操作失敗，程式停止\n");
+            exit(0);
+        }
         printf("請輸入要新增操作人員 Name:\n");
         scanf("%s\n", empr.emp_name);
         printf("請輸入要新增操作人員 Salary:\n");
