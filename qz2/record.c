@@ -70,6 +70,6 @@ int main() {
         stat_table[date_indx].lotto_numset += (rec.lotto_receipt/55);
     }
     fclose(rcfp);
-
+    print_reportfile(stat_table, table_indx);
     return 0;
 }
