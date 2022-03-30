@@ -54,7 +54,7 @@ void do_lotto_main(int counter) {
     snprintf(lotto_file, 20, "lotto[%05d].txt", counter);
     printf("歡迎光臨長庚樂透購買機台\n");
     printf("請輸入操作人員id(0-5): \n");
-    scanf("%d", &ope_id);
+    scanf("%d\n", &ope_id);
     while (ope_id > 5 || ope_id < 0) {
         printf("id輸入錯誤，請重新輸入\n");
         printf("請輸入操作人員id(0-5): \n");
