@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define RECORD_FILE "records.bin"
-#define REPORT_FILE "Report.txt"
+#define REPORT_FILE "report.txt"
 typedef struct lotto_record_t {
     int lotto_no;
     int lotto_receipt;
