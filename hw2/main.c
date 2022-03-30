@@ -54,7 +54,7 @@ void do_lotto_main(int counter) {
     snprintf(lotto_file, 20, "lotto[%05d].txt", counter);
     printf("歡迎光臨長庚樂透購買機台\n");
     printf("請輸入操作人員id(0-5): \n");
-    scanf("%d\n", &ope_id);
+    scanf("%d", &ope_id);
     while (ope_id > 5 || ope_id < 0) {
         printf("id輸入錯誤，請重新輸入\n");
         printf("請輸入操作人員id(0-5): \n");
@@ -66,12 +66,12 @@ void do_lotto_main(int counter) {
         }
     }
     if (ope_id == 0) {
-        printf("請輸入要新增操作人員 ID(1-99): ");
-        scanf("%d\n", empr.emp_id);
-        printf("請輸入要新增操作人員 Name: ");
-        scanf("%s\n", empr.emp_name);
-        printf("請輸入要新增操作人員 Salary: ");
-        scanf("%d\n", empr.emp_salary);
+        printf("\n請輸入要新增操作人員 ID(1-99): \n");
+        scanf("%d", empr.emp_id);
+        printf("\n請輸入要新增操作人員 Name: \n");
+        scanf("%s", empr.emp_name);
+        printf("\n請輸入要新增操作人員 Salary: \n");
+        scanf("%d", empr.emp_salary);
         FILE* ofp = fopen(OPERATOR_FILE, "ab");
         fwrite(&empr, sizeof(empr), 1, ofp);
         fclose(ofp);
