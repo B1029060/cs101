@@ -49,7 +49,7 @@ void do_lotto_main(int counter) {
     char c;
     int ticket = 3;
     lotto_record_t rec;
-    emp_record_t empr[1];
+    emp_record_t empr;
     time_t now = time(0);
     snprintf(lotto_file, 20, "lotto[%05d].txt", counter);
     printf("歡迎光臨長庚樂透購買機台\n");
@@ -66,14 +66,14 @@ void do_lotto_main(int counter) {
         }
     }
     if (ope_id == 0) {
-        printf("請輸入要新增操作人員 ID(1-99):\n");
-        scanf("%d\n", empr[0].emp_id);
-        printf("請輸入要新增操作人員 Name:\n");
-        scanf("%s\n", empr[0].emp_name);
-        printf("請輸入要新增操作人員 Salary:\n");
-        scanf("%d\n", empr[0].emp_salary);
+        printf("請輸入要新增操作人員 ID(1-99): ");
+        scanf("%d\n", empr.emp_id);
+        printf("請輸入要新增操作人員 Name: ");
+        scanf("%s\n", empr.emp_name);
+        printf("請輸入要新增操作人員 Salary: ");
+        scanf("%d\n", empr.emp_salary);
         FILE* ofp = fopen(OPERATOR_FILE, "ab");
-        fwrite(empr, sizeof(empr), 1, ofp);
+        fwrite(&empr, sizeof(empr), 1, ofp);
         fclose(ofp);
         printf("操作完成，程式停止\n");
         exit(0);
