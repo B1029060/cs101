@@ -16,11 +16,7 @@ typedef struct lotto_record {
     char date[16];
     char time[16];
 } lotto_record_t;
-typedef struct emp_record {
-    int id;
-    char name[16];
-    int salary[8];
-} emp_record_t;
+
 void init_file() {
     FILE* fp = fopen(COUNTER_FILE, "r");
     int write_array[1];
@@ -45,37 +41,17 @@ void do_lotto_main(int counter) {
     int lotto_file[20];
     int ope_id = 0;
     int num_set = 0;
-    int balan = 0;
     char c;
     lotto_record_t rec;
-    emp_record_t emp;
     time_t now = time(0);
     snprintf(lotto_file, 20, "lotto[%05d].txt", counter);
     printf("歡迎光臨長庚樂透購買機台\n");
     printf("請輸入操作人員id(0-5): \n");
     scanf("%d", &ope_id);
     while (ope_id > 5 || ope_id < 0) {
-        balan++;
         printf("id輸入錯誤，請重新輸入\n");
         printf("請輸入操作人員id(0-5): \n");
         scanf("%d", &ope_id);
-        if (balan == 3) {
-            printf("輸錯次數達到3次，結束程式");
-            exit(0);
-        }
-    }
-    if (ope_id == 0) {
-        printf("請輸入要新增操作人員 ID(1-99): \n");
-        scanf("%d", &emp.id);
-        printf("請輸入要新增操作人員 Name: \n");
-        scanf("%s", emp.name);
-        printf("請輸入要新增操作人員 Salary: \n");
-        scanf("%d", emp.salary);
-        FILE* rfp = fopen(RECORD_FILE, "ab");
-        fwrite(&emp, sizeof(emp), 1, rfp);
-        fclose(rfp);
-        printf("程式結束...");
-        exit(0);
     }
     printf("請問您要買幾單樂透彩(1-5): ");
     scanf("%d", &num_set);
