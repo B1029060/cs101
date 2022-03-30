@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #define RECORD_FILE "records.bin"
+#define REPORT_FILE "Report.txt"
 typedef struct lotto_record_t {
     int lotto_no;
     int lotto_receipt;
+    int emp_id;
     char lotto_date[16];
+    char lotto_time[16];
 } lotto_record_t;
 
 int main() {

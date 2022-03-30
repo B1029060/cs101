@@ -9,12 +9,12 @@
 #define MAX_LOTTO_NUM 7
 #define MAX_LOTTO_NUMSET 5
 
-typedef struct lotto_record {
-    int no;
-    int receipt;
-    int id;
-    char date[16];
-    char time[16];
+typedef struct lotto_record_t {
+    int lotto_no;
+    int lotto_receipt;
+    int emp_id;
+    char lotto_date[16];
+    char lotto_time[16];
 } lotto_record_t;
 typedef struct emp_record {
     int emp_id[2];
@@ -83,11 +83,11 @@ void do_lotto_main(int counter) {
     print_lottofile(num_set, counter, lotto_file);
     print_lottofile_id(num_set, counter, ope_id);
     printf("已為您購買的%d單樂透組合輸出至 %s\n", num_set, lotto_file);
-    rec.no = counter;
-    rec.receipt = 55 * num_set;
-    rec.id = ope_id;
-    strftime(rec.date, 9, "%Y%m%d", localtime(&now));
-    strftime(rec.time, 9, "%H:%M:%S", localtime(&now));
+    rec.lotto_no = counter;
+    rec.lotto_receipt = 55 * num_set;
+    rec.emp_id = ope_id;
+    strftime(rec.lotto_date, 9, "%Y%m%d", localtime(&now));
+    strftime(rec.lotto_time, 9, "%H:%M:%S", localtime(&now));
     FILE* cfp = fopen(RECORD_FILE, "ab");
     fwrite(&rec, sizeof(rec), 1, cfp);
     fclose(cfp);
