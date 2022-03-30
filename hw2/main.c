@@ -66,11 +66,11 @@ void do_lotto_main(int counter) {
         }
     }
     if (ope_id == 0) {
-        printf("\n請輸入要新增操作人員 ID(1-99): \n");
+        printf("請輸入要新增操作人員 ID(1-99): \n");
         scanf("%d", empr.emp_id);
-        printf("\n請輸入要新增操作人員 Name: \n");
+        printf("請輸入要新增操作人員 Name: \n");
         scanf("%s", empr.emp_name);
-        printf("\n請輸入要新增操作人員 Salary: \n");
+        printf("請輸入要新增操作人員 Salary: \n");
         scanf("%d", empr.emp_salary);
         FILE* ofp = fopen(OPERATOR_FILE, "ab");
         fwrite(&empr, sizeof(empr), 1, ofp);
