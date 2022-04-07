@@ -7,7 +7,7 @@
 void hanoi_tower(int n, char A, char B, char C) {
     FILE* fp = fopen("hanoi.txt", "a+");
     if(n == 1) {
-        fprintf("Move disk %d from %c to %c\n", n, A, C);
+        fprintf(fp, "Move disk %d from %c to %c\n", n, A, C);
     }
     else {
         hanoi(n-1, A, C, B);
