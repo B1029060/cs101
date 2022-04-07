@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-void rec_dec (char* s) {
-    if (*s != NULL) printf("%c,", *s++);
-    if (*s != NULL) rec_dec(&(*s)); 
-    if (*s == NULL) printf("\n");
-}
+// void rec_dec (char* s) {
+    // if (*s != NULL) printf("%c,", *s);
+    // if (*s != NULL) rec_dec(++s); 
+    // if (*s == NULL) printf("\n");
+// }
 void hanoi_tower(int n, char A, char B, char C) {
     FILE* fp = fopen("hanoi.txt", "w");
     if(n == 1) {
@@ -30,7 +30,7 @@ int multiplication(int i, int j) {
 
 int main() {
     char s[] = "1234567890";
-    rec_dec(s);
+    // rec_dec(s);
     printf("func#1---\n");
     hanoi_tower(16, 'A', 'B', 'C');
     printf("func#2---\n");
