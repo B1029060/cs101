@@ -11,12 +11,16 @@ int rec_strlen(char* s) { int a = 0;
 } 
 
 char* my_sort(char* s) {
-    char* temp;
-    while (*s++ != NULL) {
-        *temp = *s;
-        if (*s > *--s) {        }
+    for (char* t = s; *t; t++) {
+        for (char* p = t+1; *p; p++) {
+            if (*t > *p) {
+                char tmp = *t;
+                *t = *p;
+                *p = tmp;
+            }
+        }
     }
-
+    return s;
 }
 int main () {
     char s[] = "IU is a girl!";
