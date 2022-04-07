@@ -7,9 +7,8 @@ void rec_dec (char* s) {
 }
 void hanoi(int n, char A, char B, char C) {
     if(n == 1) {
-        FILE* fp = fopen("hanoi.txt", "w");
-        char rc[64] = printf("Move disk 1 from %c to %c\n", A, C);
-        fprintf(fp, rc);
+        FILE* fp = fopen("hanoi.txt", "w+");
+        fprintf(fp, "Move disk %d from %c to %c\n", n, A, C);
         fclose(fp);
     }
     else {
