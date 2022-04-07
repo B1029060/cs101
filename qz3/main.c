@@ -1,16 +1,15 @@
 #include <stdio.h>
 
 void rec_dec (char* s) {
+    if (*s != NULL) printf("%c,", *s++);
     if (*s == NULL) printf("\n");
     if (*s == NULL) return 0;
-    if (*s != NULL) printf("%c,", *s++);
     rec_dec(s);
-    return 0;
 }
 void hanoi_tower(int n, char A, char B, char C) {
     FILE* fp = fopen("hanoi.txt", "w+");
     if(n == 1) {
-        fprintf(fp, "Move disk from %c to %c\n", A, C);
+        fprintf(fp, "Move disk %d from %c to %c\n", n, A, C);
     }
     else {
         hanoi_tower(n-1, A, C, B);
