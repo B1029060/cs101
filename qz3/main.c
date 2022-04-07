@@ -24,7 +24,7 @@ int multiplication(int i, int j) {
         j = 1;
         i++;
     }
-    printf("%dx%d = %d\t", i, j, i*j);
+    printf("\t%dx%d=%d", i, j, i*j);
     if (i == 9 && j == 9) return 0;
     multiplication(i, ++j);
 }
