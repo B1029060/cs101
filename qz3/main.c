@@ -6,16 +6,16 @@ void rec_dec (char* s) {
     if (*s == NULL) printf("\n");
 }
 void hanoi(int n, char A, char B, char C) {
-    FILE* fp = fopen("hanoi.txt", "w");
     if(n == 1) {
-        fprintf(fp, "Move disk 1 from %c to %c\n", A, C);
+        FILE* fp = fopen("hanoi.txt", "w");
+        printf("Move disk 1 from %c to %c\n", A, C);
+        fclose(fp);
     }
     else {
         hanoi(n-1, A, C, B);
         hanoi(1, A, B, C);
         hanoi(n-1, B, A, C);
     }
-    fclose(fp);
 }
 
 int multiplication(int i, int j) {
