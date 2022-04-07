@@ -5,6 +5,7 @@ void rec_dec (char* s) {
     if (*s == NULL) return 0;
     if (*s != NULL) printf("%c,", *s++);
     rec_dec(s);
+    return 0;
 }
 void hanoi_tower(int n, char A, char B, char C) {
     FILE* fp = fopen("hanoi.txt", "w+");
