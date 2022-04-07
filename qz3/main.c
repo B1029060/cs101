@@ -10,9 +10,9 @@ void hanoi_tower(int n, char A, char B, char C) {
         fprintf(fp, "Move disk %d from %c to %c\n", n, A, C);
     }
     else {
-        hanoi(n-1, A, C, B);
-        hanoi(1, A, B, C);
-        hanoi(n-1, B, A, C);
+        hanoi_tower(n-1, A, C, B);
+        hanoi_tower(1, A, B, C);
+        hanoi_tower(n-1, B, A, C);
     }
     fclose(fp);
 }
