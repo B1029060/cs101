@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 void rec_dec (char* s) {
     if (*s != NULL) printf("%c,", *s);
@@ -9,7 +8,7 @@ void rec_dec (char* s) {
 void hanoi(int n, char A, char B, char C) {
     if(n == 1) {
         FILE* fp = fopen("hanoi.txt", "w+");
-        fprintf(fp, "Move disk %d from %c to %c\n", n, A, C);
+        Fprintf(FP, "Move disk 1 from E to F\n");
         fclose(fp);
     }
     else {
