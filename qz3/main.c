@@ -1,9 +1,11 @@
 #include <stdio.h>
 
 void rec_dec (char* s) {
-    if (*s != NULL) printf("%c,", *s++);
-    if (*s == NULL) printf("\n");
-    if (*s != NULL) rec_dec(s);
+    if (*s != NULL) {printf("%c,", *s++);
+    rec_dec(s);
+    } else {
+        printf("\n");
+    }   
 }
 void hanoi_tower(int n, char A, char B, char C) {
     FILE* fp = fopen("hanoi.txt", "w+");
