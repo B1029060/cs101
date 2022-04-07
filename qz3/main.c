@@ -3,7 +3,7 @@
 void rec_dec (char* s) {
     if (*s != NULL) printf("%c,", *s++);
     if (*s == NULL) printf("\n");
-    if (*s == NULL) return 0;
+    if (*s == NULL) exit(0);
     rec_dec(s);
 }
 void hanoi_tower(int n, char A, char B, char C) {
