@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void rec_dec (char* s) {
     if (*s != NULL) printf("%c,", *s);
