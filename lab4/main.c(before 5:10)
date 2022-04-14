@@ -1,0 +1,44 @@
+#include <stdio.h>
+int* get_an(int(* a)[10]) {
+    int num = 9;
+    for (int i = 0; i <= 10; i++) {
+        if (*(a[0]+i) == num) {
+            printf("&n[%i]->%p, n[%i]=%i;", i, a[0]+i, i, *(a[0]+i));
+            return (a[0]+i);
+        }
+    }
+}
+int** sort(int(* a)[10], int** b) {
+    int ctr = 0;
+    int rmb[10]; 
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            if (*(a[0]+j) < *(a[0]+i)) {
+                ctr++;
+                if (j == 9) {
+                    ((*b)+ctr) = (a[0]+i);
+                    rmb[i] = ctr;
+                }
+            }
+        }
+        ctr = 0;
+        if (i == 9) {
+            for (int k = 0; k < 10; k++) {
+                printf("&n[%i]->%p, n[%i]=%i; ap[%i]->%p, *ap[%i]=%i\n", rmb[k], a[0]+rmb[k], rmb[k], *(a[0]+rmb[k]), k, ((*b)+k), k, *((*b)+k));
+            }
+        }
+    }
+}
+
+int main() {
+    int n[] = {6,4,7,2,0,9,8,1,5,3};
+    int* p;
+    int* ap[10];
+    printf("No.1-------------------\n");
+    p = get_an(&n);
+    printf("p->%p, *p=%i\n", p, *p);
+    printf("No.2-------------------\n");
+    sort(&n, ap);
+    
+    return 0;
+}
