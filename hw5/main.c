@@ -2,7 +2,7 @@
 
 int* my_calloc(int n, int size) {
     for (; size>0; size--) return n;
-    printf("%s\n", g_mem);
+    printf("%s\n", *my_calloc);
 }
 void my_free(int* p) {
     my_calloc(0, sizeof(p));
