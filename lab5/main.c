@@ -27,14 +27,16 @@ typedef struct array_list {
 int main() {
     printf("No.1 ------------\n");
     int n = 10;
-    int* ip = get_int_array(n);
-    for (int i = 0; i < n; i++) {
-        set_value(ip+i, i+1);
-    }
+    int* ip1 = get_int_array(n);
+    for (int i = 0; i < n; i++) set_value(ip1+i, i+1);
     
-    print_array(ip, n);
+    print_array(ip1, n);
     printf("No.2 ------------\n");
     array_list_t nn;
-    
+    nn.var = 20;
+    int* ip2 = nn.Get_Int_Array(nn.var);
+    for (int i = 0; i < nn.var; i++) nn.Set_Value(ip2+i, i+1);
+    nn.Print_Array(ip2, nn.var);
+    printf("No.3 ------------");
     return 0;
 }
