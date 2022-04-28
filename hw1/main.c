@@ -10,19 +10,11 @@
 
 void do_lotto_main() {
     int lotto_file[20];
-    int ope_id = 0;
     int num_set = 0;
     printf("歡迎光臨長庚樂透購買機台\n");
-    printf("請輸入操作人員id(0-5): \n");
-    scanf("%d", &ope_id);
-    while (ope_id > 5 || ope_id < 0) {
-        printf("id輸入錯誤，請重新輸入\n");
-        printf("請輸入操作人員id(0-5): \n");
-        scanf("%d", &ope_id);
-    }
-    printf("請問您要買幾單樂透彩(1-5): ");
+    printf("請問您要買幾張樂透彩(1-5): ");
     scanf("%d", &num_set);
-    print_lottofile(num_set, num_set, lotto_file);
+    print_lottofile(1, num_set, lotto_file);
 }
 
 void print_lottofile(int num_set, int seq, char lotto_file[]) {
@@ -33,17 +25,15 @@ void print_lottofile(int num_set, int seq, char lotto_file[]) {
     printf("========= lotto649 =========\n");
     printf("========+ No.00001 +========\n");
     printf("= %.*s =\n", 24, ctime(&curtime));
-    for (int j=0; j<num_set; j++) {
-        for (int i=0; i<seq; i++) {
-            if (i<5) {
-                print_lotto_row(i+1);
-            } else {
-                printf("[%d]: -- -- -- -- -- -- --\n", i+1);
-            }
+    for (int i=0; i<seq; i++) {
+        if (i<5) {
+            print_lotto_row(i+1);
+        } else {
+            printf("[%d]: -- -- -- -- -- -- --\n", i+1);
         }
-    printf("============================\n");    
     }
-    printf("========= csie@CGU =========\n");
+    printf("============================\n");    
+
 }
 void print_lotto_row(int n) {
     int numset[MAX_LOTTO_NUM];
