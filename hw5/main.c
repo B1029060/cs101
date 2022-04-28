@@ -1,5 +1,10 @@
 #include <stdio.h>
 
+typedef struct my_mm {
+    int* calloced_p[10];
+} my_mm_t;
+int g_mm[10];
+my_mm_t mms;
 void printf_calloc_array(int flag) {
     for (int i = 0; i < 10; i++) (mms.calloced_p[i]) ? printf("1") : printf("0") ;
     if (!flag) printf(" <- Out of space");
@@ -33,11 +38,6 @@ void my_free(int* p) {
     }
     printf_calloc_array(1);
 }
-typedef struct my_mm {
-    int* calloced_p[10];
-} my_mm_t;
-int g_mm[10];
-my_mm_t mms;
 
 int main () {
     int* np1 = my_calloc(1, 1);
