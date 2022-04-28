@@ -1,14 +1,37 @@
 #include <stdio.h>
 
+void printf_calloc_array(int flag) {
+    for (int i = 0; i < 10; i++) (mms.calloced_p[i]) ? printf("1") : printf("0") ;
+    if (!flag) printf(" <- Out of space");
+    printf("\n");
+}
 int* my_calloc(int n, int size) {
-    for (; size>0; size--) return n;
-    printf("%s\n", *my_calloc);
+    int av_size = 0;
+    int index;
+    for (index = 0; index < 10; index++) {
+        if (!mms.calloced_p[index]) {
+            av_size++;
+        } else {
+            av_size = 0;
+        }
+        if (av_size == size) {
+            index -= size - 1;
+            break;
+        }
+    }
+    if (av_size < size) {
+        printf_calloc_array(0);
+        return NULL;
+    }
+    for (int i = 0; i < size; i++) mms.calloced_p[index+i] = &g_mem[index];
+    printf_calloc_array(1);
+    return &g_mem[index];
 }
 void my_free(int* p) {
     my_calloc(0, sizeof(p));
 }
 typedef struct my_mm {
-    int m[10];
+    int* calloced_p[10];
 } my_mm_t;
 int g_mem[10];
 my_mm_t mms;
