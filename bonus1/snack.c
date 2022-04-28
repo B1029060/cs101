@@ -170,7 +170,7 @@ bool snake_move_player( pos head )
     }
     
     // Draw the new head 
-    snake_write_text( head.y, head.x, "CGU" );
+    snake_write_text( head.y, head.x, "2");
     
     // Update scoreboard
     char buffer[25];
