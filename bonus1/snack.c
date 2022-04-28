@@ -171,7 +171,7 @@ bool snake_move_player( pos head ,int rm)
     
     
     // Draw the new head 
-    char a = 48 + (rm % 10);
+    char a = (48 + (rm % 10));
     snake_write_text( head.y, head.x, a);
     
     // Update scoreboard
@@ -221,6 +221,9 @@ int main( int argc, char *argv[] )
     // Event loop
 
     int rm = 0;
+    snake_write_text( head.y, head.x, 'C');
+    snake_write_text( head.y, head.x, 'G');
+    snake_write_text( head.y, head.x, 'U');
     while( 1 )
     {
         int in = getch( );
