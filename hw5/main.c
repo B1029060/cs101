@@ -23,17 +23,20 @@ int* my_calloc(int n, int size) {
         printf_calloc_array(0);
         return NULL;
     }
-    for (int i = 0; i < size; i++) mms.calloced_p[index+i] = &g_mem[index];
+    for (int i = 0; i < size; i++) mms.calloced_p[index+i] = &g_mm[index];
     printf_calloc_array(1);
-    return &g_mem[index];
+    return &g_mm[index];
 }
 void my_free(int* p) {
-    my_calloc(0, sizeof(p));
+    for (int i = 0; i < 10; i++) {
+        if (mms.calloced_p[i] == p) mms.calloced_p[i] = NULL;
+    }
+    printf_calloc_array(1);
 }
 typedef struct my_mm {
     int* calloced_p[10];
 } my_mm_t;
-int g_mem[10];
+int g_mm[10];
 my_mm_t mms;
 
 int main () {
