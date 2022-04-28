@@ -5,7 +5,6 @@
 
 #define COUNTER_FILE "counter.bin"
 #define OPERATOR_FILE "operator_id.bin"
-#define RECORD_FILE "records.bin"
 #define MAX_LOTTO_NUM 7
 #define MAX_LOTTO_NUMSET 5
 
@@ -88,9 +87,6 @@ void do_lotto_main(int counter) {
     rec.id = ope_id;
     strftime(rec.date, 9, "%Y%m%d", localtime(&now));
     strftime(rec.time, 9, "%H:%M:%S", localtime(&now));
-    FILE* cfp = fopen(RECORD_FILE, "ab");
-    fwrite(&rec, sizeof(rec), 1, cfp);
-    fclose(cfp);
 }
 
 void print_lottofile(int num_set, int counter, char lotto_file[]) {
