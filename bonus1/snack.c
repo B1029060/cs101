@@ -172,7 +172,7 @@ bool snake_move_player( pos head ,int rm)
     
     // Draw the new head 
     char a = (48 + (rm % 10));
-    snake_write_text( head.y, head.x, a);
+    snake_write_text( head.y, head.x, 'S');
     
     // Update scoreboard
     char buffer[25];
