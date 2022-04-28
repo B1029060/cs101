@@ -20,7 +20,7 @@ char* my_sort(char* s) {
             }
         }
     }
-    return *s;
+    return s;
 }
 int main () {
     char s[] = "IU is a girl!";
