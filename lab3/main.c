@@ -1,13 +1,13 @@
 #include <stdio.h>
 
 int my_strlen(char* s) {
-    int a = 0;
-    while (*s++ != NULL) a++;
-    return a;
+    int len = 0;
+    while (*s++ != NULL) len++;
+    return len;
 }    
-int rec_strlen(char* s) { int a = 0;
-    while (*s++ != NULL) {rec_strlen(s); a++;}
-    return a;
+int rec_strlen(char* s) {
+    if (!*s) return 0;
+    return 1 + rec_strlen(s+1);
 } 
 
 char* my_sort(char* s) {
