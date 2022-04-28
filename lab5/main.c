@@ -64,10 +64,10 @@ int main() {
     nn.Get_Int_Array = get_int_array;
     nn.Set_Value = set_value;
     nn.Print_Array = print_array;
-    int** ip2 = nn.Get_Int_Array(nn.var);
-    for (int i = 0; i < nn.var; i++) nn.Set_Value(*ip2+1, i+1);
+    int* ip2 = nn.Get_Int_Array(nn.var);
+    for (int i = 0; i < nn.var; i++) nn.Set_Value(ip2+i, i+1);
     nn.Print_Array(*ip2, nn.var);
-    free(*ip2);
+    free(ip2);
     printf("No.3 ------------\n");
     char a[] = "IU!IU!";
     char b[] = "@CGU";
