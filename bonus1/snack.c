@@ -171,7 +171,7 @@ bool snake_move_player( pos head ,int rm)
     
     
     // Draw the new head 
-    char a = (rm % 10);
+    char a = 48 + (rm % 10);
     snake_write_text( head.y, head.x, a);
     
     // Update scoreboard
@@ -261,7 +261,7 @@ int main( int argc, char *argv[] )
         if( !snake_in_bounds( head ) )    
             snake_game_over( );
         else
-            snake_move_player( head, rm++ );
+            snake_move_player( head, ++rm );
     }
     snake_game_over( );
 }
