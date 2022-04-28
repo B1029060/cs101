@@ -221,9 +221,6 @@ int main( int argc, char *argv[] )
     // Event loop
 
     int rm = 0;
-    snake_write_text( head.y, head.x, 'C');
-    snake_write_text( head.y, head.x, 'G');
-    snake_write_text( head.y, head.x, 'U');
     while( 1 )
     {
         int in = getch( );
