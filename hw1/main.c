@@ -16,53 +16,51 @@ int main() {
     time(&curtime);
     int lot[7],i;
     srand((unsigned) time(NULL));
-    printf("歡迎光臨長庚樂透彩購買機台\n請問您要買幾單樂透彩: ");
+    printf("歡迎光臨長庚樂透彩購買機台\n請問您要買幾組樂透彩: ");
     scanf("%d",&i);
-    printf("已為您購買的 %d 單樂透組合輸出至 lotto.txt\n",i);
-    for (int fch = 1; fch <= i; fch++) {
-         printf("========lotto649========\n=%.*s=\n",24,ctime(&curtime));
-        for (int j = 1; j <= 5; j++) {
-            printf("\t[%d]: ",j);
-            for (int num = 0,cnt,buf; num < 6; num++) {
-                cnt = rand() % 69 + 1;
-                if (numset(cnt, lot, 6)) {
-                    continue;
-                } else {
-                    lot[num] = cnt;
-                }
-                buf = num;
-                if (buf > 0) {
-                    for (; buf > 0; buf--) {
-                        if (lot[buf] < lot[buf-1]) {
-                            lot[7] = lot[buf];
-                            lot[buf] = lot[buf-1];
-                            lot[buf-1] = lot[7];
-                        }
-                    }
-                }
-                if (num == 5) {
-                    lot[6] = rand() % 9 + 1;
-                    for (int seq = 0; seq < 6; seq++) {
-                        if (lot[6] == lot[seq] && lot[6] > 1) {
-                            lot[6] = lot[6] - 1;
-                        } else if (lot[6] == lot[seq] && lot[6] < 10) {
-                            lot[6] = lot[6] + 1;
-                        } else if (lot[seq] < 10) {
-                            printf(" 0%d ",lot[seq]);
-                        } else {
-                            printf(" %d ",lot[seq]);
-                        }
-                    }
-                    if (lot[6] < 10) {
-                        printf(" 0%d\n",lot[6]);
-                    } else {
-                        printf(" %d\n",lot[6]);
-                    }    
+    printf("已為您購買的 %d 組樂透組合輸出至 lotto.txt\n",i);
+    printf("========lotto649========\n=%.*s=\n",24,ctime(&curtime));
+    for (int j = 1; j <= 5; j++) {
+        printf("\t[%d]: ",j);
+        for (int num = 0,cnt,buf; num < 6; num++) {
+            cnt = rand() % 69 + 1;
+            if (numset(cnt, lot, 6)) {
+                 continue;
+            } else {
+                lot[num] = cnt;
+            }
+            buf = num;
+            if (buf > 0) {
+                for (; buf > 0; buf--) {
+                    if (lot[buf] < lot[buf-1]) {
+                        lot[7] = lot[buf];
+                        lot[buf] = lot[buf-1];
+                        lot[buf-1] = lot[7];
+                    }                   
                 }
             }
+            if (num == 5) {
+                lot[6] = rand() % 9 + 1;
+                for (int seq = 0; seq < 6; seq++) {
+                    if (lot[6] == lot[seq] && lot[6] > 1) {
+                        lot[6] = lot[6] - 1;
+                    } else if (lot[6] == lot[seq] && lot[6] < 10) {
+                        lot[6] = lot[6] + 1;                        
+                    } else if (lot[seq] < 10) {
+                        printf(" 0%d ",lot[seq]);
+                    } else {
+                        printf(" %d ",lot[seq]);
+                    }
+                }
+                if (lot[6] < 10) {
+                    printf(" 0%d\n",lot[6]);
+                } else {
+                    printf(" %d\n",lot[6]);                    }    
+            }
         }
-        printf("========csie@CGU========\n");
     }
+    printf("========csie@CGU========\n");
+    
     
   return 0;
 }
