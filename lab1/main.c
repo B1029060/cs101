@@ -8,94 +8,40 @@
 #define MAX_LOTTO_NUM 7
 #define MAX_LOTTO_NUMSET 5
 
-void init_file() {
-    FILE* fp = fopen(COUNTER_FILE, "r");
-    int write_array[1];
-    write_array[0] = 0;
-    if (fp == NULL) {
-        FILE* tmpfp = fopen(COUNTER_FILE, "wb");
-        fwrite(write_array, sizeof(int), 1, tmpfp);
-        fclose(tmpfp);
-    } else {
-        fclose(fp);
-    }
-}
-int get_counter() {
-    int read_array[1];
-    FILE* fpg = fopen(COUNTER_FILE, "rb");
-    fread(read_array, sizeof(int), 1, fpg);
-    fclose(fpg);
-    return read_array[0];
-}
-    
-void do_lotto_main(int counter) {
+void do_lotto_main() {
     int lotto_file[20];
-    int ope_id = 0;
     int num_set = 0;
-    snprintf(lotto_file, 20, "lotto[%05d].txt", counter);
+    int id;
     printf("歡迎光臨長庚樂透購買機台\n");
-    printf("請輸入操作人員id(0-5): \n");
-    scanf("%d", &ope_id);
-    while (ope_id > 5 || ope_id < 0) {
-        printf("id輸入錯誤，請重新輸入\n");
-        printf("請輸入操作人員id(0-5): \n");
-        scanf("%d", &ope_id);
-    }
-    printf("請問您要買幾單樂透彩(1-5): ");
+    printf("請輸入操作人員ID:(0-5): ");
+    scanf("%d", &id);
+    printf("請問您要買幾張樂透彩(1-5): ");
     scanf("%d", &num_set);
-    print_lottofile(num_set, counter, lotto_file);
-    print_lottofile_id(num_set, counter, ope_id);
-    printf("已為您購買的%d單樂透組合輸出至 %s\n", num_set, lotto_file);
+    print_lottofile(1, num_set, lotto_file, id);
 }
 
-void print_lottofile(int num_set, int counter, char lotto_file[]) {
+void print_lottofile(int num_set, int seq, char lotto_file[], int id) {
     time_t curtime;
     time(&curtime);
     srand(time(0));
 
-    FILE* tmpfp = fopen(lotto_file, "w+");
-    fprintf(tmpfp, "========= lotto649 =========\n");
-    fprintf(tmpfp, "========+ No.%05d +========\n", counter);
-    fprintf(tmpfp, "= %.*s =\n", 24, ctime(&curtime));
-    for (int j=0; j<num_set; j++) {
-        for (int i=0; i<MAX_LOTTO_NUMSET; i++) {
-            if (i<5) {
-                print_lotto_row(tmpfp, i+1);
-            } else {
-                fprintf(tmpfp, "[%d]: -- -- -- -- -- -- --\n", i+1);
-            }
+    printf("========= lotto649 =========\n");
+    printf("========+ No.00001 +========\n");
+    printf("= %.*s =\n", 24, ctime(&curtime));
+    for (int i=0; i<seq; i++) {
+        if (i<5) {
+            print_lotto_row(i+1);
+        } else {
+            printf("[%d]: -- -- -- -- -- -- --\n", i+1);
         }
-    fprintf(tmpfp, "============================\n");    
     }
-    fprintf(tmpfp, "========= csie@CGU =========\n");
-    fclose(tmpfp);
+    printf("========== Op.%05d ============\n", id);    
+    printf("============ @CGU ============\n");
 }
-void print_lottofile_id(int num_set, int counter, int id) {
-    time_t curtime;
-    time(&curtime);
-    srand(time(0));
-
-    FILE* tmpfp = fopen(OPERATOR_FILE, "w+");
-    fprintf(tmpfp, "========= lotto649 =========\n");
-    fprintf(tmpfp, "========+ No.%05d +========\n", counter);
-    fprintf(tmpfp, "= %.*s =\n", 24, ctime(&curtime));
-    for (int j=0; j<num_set; j++) {
-        for (int i=0; i<MAX_LOTTO_NUMSET; i++) {
-            if (i<5) {
-                print_lotto_row(tmpfp, i+1);
-            } else {
-                fprintf(tmpfp, "[%d]: -- -- -- -- -- -- --\n", i+1);
-            }
-        }
-    fprintf(tmpfp, "========= Op.%05d =========\n", id);    
-    }
-    fprintf(tmpfp, "========= csie@CGU =========\n");
-    fclose(tmpfp);
-}
-void print_lotto_row(FILE* tmpfp, int n) {
+void print_lotto_row(int n) {
     int numset[MAX_LOTTO_NUM];
 
-    fprintf(tmpfp, "[%d]: ",n);
+    printf("[%d]: ",n);
     for (int i = 0; i<MAX_LOTTO_NUM-1;) {
         int num = (rand() % 69) + 1;
         if (num_in_numset(num, numset, MAX_LOTTO_NUM-1)) {
@@ -124,9 +70,9 @@ void print_lotto_row(FILE* tmpfp, int n) {
         }
     }
     for (int i = 0; i<MAX_LOTTO_NUM; i++) {
-        fprintf(tmpfp, "%02d ", numset[i]);
+        printf("%02d ", numset[i]);
     }
-    fprintf(tmpfp, "\n");
+    printf("\n");
 }
 
 int num_in_numset(int num, int numset[], int Len) {
@@ -140,19 +86,7 @@ int num_in_numset(int num, int numset[], int Len) {
     return ret;
 }
 
-void set_counter(int counter) {
-    int write_array[1];
-    write_array[0] = counter;
-    FILE* tmpfp;
-    tmpfp = fopen(COUNTER_FILE, "wb");
-    fwrite(write_array, sizeof(int), 1, tmpfp);
-    fclose(tmpfp);
-}
 int main() {
-    int counter;
-    init_file();
-    counter = get_counter();
-    do_lotto_main(++counter);
-    set_counter(counter);
+    do_lotto_main();
     return 0;
 }
