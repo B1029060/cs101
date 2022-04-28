@@ -68,11 +68,11 @@ int main() {
     for (int i = 0; i < nn.var; i++) nn.Set_Value(ip2+1, i+1);
     nn.Print_Array(ip2, nn.var);
     free(ip2);
-    printf("No.3 ------------");
+    printf("No.3 ------------\n");
     char a[] = "IU!IU!";
     char b[] = "@CGU";
     char* cp1 = add_str_func(a, b, func);
-    printf("add_str_func = %d\n", cp1);
+    printf("add_str_func = %s\n", cp1);
     free(cp1);
 
     return 0;
