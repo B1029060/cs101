@@ -1,66 +1,99 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
-int numset(int num, int numset[], int mxm) {
+#include <string.h>
+
+#define COUNTER_FILE "counter.bin"
+#define OPERATOR_FILE "operator_id.bin"
+#define MAX_LOTTO_NUM 7
+#define MAX_LOTTO_NUMSET 5
+
+void do_lotto_main() {
+    int lotto_file[20];
+    int ope_id = 0;
+    int num_set = 0;
+    printf("歡迎光臨長庚樂透購買機台\n");
+    printf("請輸入操作人員id(0-5): \n");
+    scanf("%d", &ope_id);
+    while (ope_id > 5 || ope_id < 0) {
+        printf("id輸入錯誤，請重新輸入\n");
+        printf("請輸入操作人員id(0-5): \n");
+        scanf("%d", &ope_id);
+    }
+    printf("請問您要買幾單樂透彩(1-5): ");
+    scanf("%d", &num_set);
+    print_lottofile(num_set, num_set, lotto_file);
+}
+
+void print_lottofile(int num_set, int seq, char lotto_file[]) {
+    time_t curtime;
+    time(&curtime);
+    srand(time(0));
+
+    printf("========= lotto649 =========\n");
+    printf("========+ No.00001 +========\n");
+    printf("= %.*s =\n", 24, ctime(&curtime));
+    for (int j=0; j<num_set; j++) {
+        for (int i=0; i<seq; i++) {
+            if (i<5) {
+                print_lotto_row(i+1);
+            } else {
+                printf("[%d]: -- -- -- -- -- -- --\n", i+1);
+            }
+        }
+    printf("============================\n");    
+    }
+    printf("========= csie@CGU =========\n");
+}
+void print_lotto_row(int n) {
+    int numset[MAX_LOTTO_NUM];
+
+    printf("[%d]: ",n);
+    for (int i = 0; i<MAX_LOTTO_NUM-1;) {
+        int num = (rand() % 69) + 1;
+        if (num_in_numset(num, numset, MAX_LOTTO_NUM-1)) {
+            continue;
+        } else {
+            numset[i] = num;
+            i++;
+        }
+    }
+    for (int i = 0; i<1; ) {
+        int num = (rand() % 10) + 1;
+        if (num_in_numset(num, numset, MAX_LOTTO_NUM-1)) {
+            continue;
+        } else {
+            numset[MAX_LOTTO_NUM-1] = num;
+            i++;
+        }
+    }
+    for (int i = 0; i<MAX_LOTTO_NUM-1; ++i) {
+        for (int j = 0; j < i; ++j) {
+            if (numset[j] > numset[i]) {
+                int temp = numset[j];
+                numset[j] = numset[i];
+                numset[i] = temp;
+            }
+        }
+    }
+    for (int i = 0; i<MAX_LOTTO_NUM; i++) {
+        printf("%02d ", numset[i]);
+    }
+    printf("\n");
+}
+
+int num_in_numset(int num, int numset[], int Len) {
     int ret = 0;
-    for (int i = 0; i < mxm; i++) {
+    for (int i = 0; i < Len; i++) {
         if (num == numset[i]) {
             ret = 1;
             break;
         }
     }
     return ret;
-} 
+}
+
 int main() {
-    time_t curtime;
-    time(&curtime);
-    int lot[7],i;
-    srand((unsigned) time(NULL));
-    printf("歡迎光臨長庚樂透彩購買機台\n請問您要買幾組樂透彩: ");
-    scanf("%d",&i);
-    printf("已為您購買的 %d 組樂透組合輸出至 lotto.txt\n",i);
-    printf("========lotto649========\n=%.*s=\n",24,ctime(&curtime));
-    for (int j = 1; j <= 5; j++) {
-        printf("\t[%d]: ",j);
-        for (int num = 0,cnt,buf; num < 6; num++) {
-            cnt = rand() % 69 + 1;
-            if (numset(cnt, lot, 6)) {
-                 continue;
-            } else {
-                lot[num] = cnt;
-            }
-            buf = num;
-            if (buf > 0) {
-                for (; buf > 0; buf--) {
-                    if (lot[buf] < lot[buf-1]) {
-                        lot[7] = lot[buf];
-                        lot[buf] = lot[buf-1];
-                        lot[buf-1] = lot[7];
-                    }                   
-                }
-            }
-            if (num == 5) {
-                lot[6] = rand() % 9 + 1;
-                for (int seq = 0; seq < 6; seq++) {
-                    if (lot[6] == lot[seq] && lot[6] > 1) {
-                        lot[6] = lot[6] - 1;
-                    } else if (lot[6] == lot[seq] && lot[6] < 10) {
-                        lot[6] = lot[6] + 1;                        
-                    } else if (lot[seq] < 10) {
-                        printf(" 0%d ",lot[seq]);
-                    } else {
-                        printf(" %d ",lot[seq]);
-                    }
-                }
-                if (lot[6] < 10) {
-                    printf(" 0%d\n",lot[6]);
-                } else {
-                    printf(" %d\n",lot[6]);                    }    
-            }
-        }
-    }
-    printf("========csie@CGU========\n");
-    
-    
-  return 0;
+    do_lotto_main();
+    return 0;
 }
