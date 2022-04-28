@@ -66,7 +66,7 @@ int main() {
     nn.Print_Array = print_array;
     int* ip2 = nn.Get_Int_Array(nn.var);
     for (int i = 0; i < nn.var; i++) nn.Set_Value(ip2+i, i+1);
-    nn.Print_Array(*ip2, nn.var);
+    nn.Print_Array(ip2, nn.var);
     free(ip2);
     printf("No.3 ------------\n");
     char a[] = "IU!IU!";
