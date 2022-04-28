@@ -143,7 +143,7 @@ void snake_draw_fruit( )
 }
 
 // Handles moving the snake for each iteration
-bool snake_move_player( pos head )
+bool snake_move_player( pos head ,int rm)
 {
     attrset( COLOR_PAIR( 1 ) ) ;
     
@@ -166,11 +166,13 @@ bool snake_move_player( pos head )
         // Handle the tail
         pos *tail = dequeue( );
         spaces[snake_cooridinate_to_index( *tail )] = false;
-        snake_write_text( tail->y, tail->x, "1" );
+        snake_write_text( tail->y, tail->x, " " );
     }
     
+    
     // Draw the new head 
-    snake_write_text( head.y, head.x, "2");
+    char a = (rm % 10);
+    snake_write_text( head.y, head.x, a);
     
     // Update scoreboard
     char buffer[25];
@@ -217,6 +219,8 @@ int main( int argc, char *argv[] )
     enqueue( head );
     
     // Event loop
+
+    int rm = 0;
     while( 1 )
     {
         int in = getch( );
@@ -257,7 +261,7 @@ int main( int argc, char *argv[] )
         if( !snake_in_bounds( head ) )    
             snake_game_over( );
         else
-            snake_move_player( head );
+            snake_move_player( head, rm++ );
     }
     snake_game_over( );
 }
