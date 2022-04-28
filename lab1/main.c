@@ -122,16 +122,14 @@ void print_lottofile_id(int num_set, int counter, int id) {
     fprintf(tmpfp, "========= lotto649 =========\n");
     fprintf(tmpfp, "========+ No.%05d +========\n", counter);
     fprintf(tmpfp, "= %.*s =\n", 24, ctime(&curtime));
-    for (int j=0; j<num_set; j++) {
-        for (int i=0; i<num_set; i++) {
-            if (i<5) {
-                print_lotto_row(tmpfp, i+1);
-            } else {
-                fprintf(tmpfp, "[%d]: -- -- -- -- -- -- --\n", i+1);
-            }
+    for (int i=0; i<num_set; i++) {
+        if (i<5) {
+            print_lotto_row(tmpfp, i+1);
+        } else {
+            fprintf(tmpfp, "[%d]: -- -- -- -- -- -- --\n", i+1);
         }
-    fprintf(tmpfp, "========= Op.%05d =========\n", id);    
     }
+    fprintf(tmpfp, "========= Op.%05d =========\n", id);    
     fprintf(tmpfp, "========= csie@CGU =========\n");
     fclose(tmpfp);
 }
