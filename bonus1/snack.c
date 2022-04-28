@@ -166,7 +166,7 @@ bool snake_move_player( pos head )
         // Handle the tail
         pos *tail = dequeue( );
         spaces[snake_cooridinate_to_index( *tail )] = false;
-        snake_write_text( tail->y, tail->x, " " );
+        snake_write_text( tail->y, tail->x, "1" );
     }
     
     // Draw the new head 
