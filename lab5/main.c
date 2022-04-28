@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int* get_int_array(int n) {
-    return calloc(sizeof(int)*n, sizeof(int));
+    return (int *)calloc(n, sizeof(int));
 }
 void set_value(int* p, int v) {
     *p = v;
