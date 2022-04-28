@@ -19,7 +19,7 @@ void print_array(int* p, int n) {
 }
 typedef struct array_list {
     int var;
-    int (* Get_Int_Array)(int);
+    int* (* Get_Int_Array)(int);
     void (* Set_Value)(int*, int);
     void (* Print_Array)(int*, int);
 } array_list_t;
