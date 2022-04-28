@@ -19,10 +19,36 @@ void print_array(int* p, int n) {
 }
 typedef struct array_list {
     int var;
-    int (* Get_Int_Array)(int n);
-    void (* Set_Value)(int* p, int v);
-    void (* Print_Array)(int* p, int n);
+    int (* Get_Int_Array)(int);
+    void (* Set_Value)(int*, int);
+    void (* Print_Array)(int*, int);
 } array_list_t;
+char* get_str_array(int n) {
+    return (char *)calloc(n, sizeof(char));
+}
+int get_str_len(char* s) {
+    int len = 0;
+    while(*s++) len++;
+    return len;
+}
+char* my_str_cpy(char* s, char* d) {
+    while(*d) *s++ = *d++;
+    *s = 0;
+    return s;
+}
+typedef char* (*ADD_INT_Func)(char*, char*);
+char* func(char* a,char* b) {
+    int str_len = 0;
+    str_len = get_str_len(a) + get_str_len(b);
+    char* new_str = get_str_array(str_len+1);
+    char* tp = new_str;
+    tp = my_str_cpy(tp, a);
+    tp = my_str_cpy(tp, b);
+    return new_str;
+}
+char* add_str_func(char* a, char* b, ADD_INT_Func func_ptr) {
+    return func_ptr(a, b);
+}
 
 int main() {
     printf("No.1 ------------\n");
@@ -35,10 +61,19 @@ int main() {
     printf("No.2 ------------\n");
     array_list_t nn;
     nn.var = 20;
+    nn.Get_Int_Array = get_int_array;
+    nn.Set_Value = set_value;
+    nn.Print_Array = print_array;
     int* ip2 = nn.Get_Int_Array(nn.var);
-    for (int i = 0; i < nn.var; i++) nn.Set_Value(ip2+i, i+1);
+    for (int i = 0; i < nn.var; i++) nn.Set_Value(ip2+1, i+1);
     nn.Print_Array(ip2, nn.var);
     free(ip2);
     printf("No.3 ------------");
+    char a[] = "IU!IU!";
+    char b[] = "@CGU";
+    char* cp1 = add_str_func(a, b, func);
+    printf("add_str_func = %d\n", cp1);
+    free(cp1);
+
     return 0;
 }
