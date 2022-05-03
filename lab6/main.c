@@ -1,16 +1,20 @@
 #include <stdio.h>
 
 int _sum(int x, int y) {
-    return x+y;
+    int a = x+y;
+    return a;
 }
 int _sub(int x, int y) {
-    return x-y;
+    int b = x-y;
+    return b;
 }
 int _mult(int x, int y) {
-    return x*y;
+    int c = x*y;
+    return c;
 }
 int _div(int x, int y) {
-    return x/y;
+    int d = x/y;
+    return d;
 }
 int _power(int x, int y) {
     if (y >= 1) return x*_power(x, --y);
