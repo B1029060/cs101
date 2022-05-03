@@ -1,20 +1,16 @@
 #include <stdio.h>
 
 int _sum(int x, int y) {
-    int a = x+y;
-    return a;
+    return x+y;
 }
 int _sub(int x, int y) {
-    int b = x-y;
-    return b;
+    return x-y;
 }
 int _mult(int x, int y) {
-    int c = x*y;
-    return c;
+    return x*y;
 }
 int _div(int x, int y) {
-    int d = x/y;
-    return d;
+    return x/y;
 }
 int _power(int x, int y) {
     if (y >= 1) return x*_power(x, --y);
@@ -35,6 +31,6 @@ int main() {
     printf("Enter 0 to +, 1 to -, 2 to *, 3 to /, 4 to ^:");
     scanf("%d", &choice);
 
-    printf("%d", ope[choice](x, y));
+    printf("%d", ope[4](x, y));
     return 0;
 }
