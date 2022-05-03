@@ -26,11 +26,12 @@ int main() {
     ope[4] = _power;
 
     printf("Enter two integer: ");
-    scanf("%d%d", &x, &y);
+    scanf("%d", &x);
+    scanf("%d", &y);
 
     printf("Enter 0 to +, 1 to -, 2 to *, 3 to /, 4 to ^:");
     scanf("%d", &choice);
 
-    printf("%d", ope[4](x, y));
+    printf("%d", ope[choice](x, y));
     return 0;
 }
