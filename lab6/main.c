@@ -23,6 +23,7 @@ int main() {
     ope[1] = _sub;
     ope[2] = _mult;
     ope[3] = _div;
+    ope[4] = _power;
 
     printf("Enter two integer: ");
     scanf("%d%d", &x, &y);
