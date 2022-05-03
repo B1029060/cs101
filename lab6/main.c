@@ -32,6 +32,6 @@ int main() {
     printf("Enter 0 to +, 1 to -, 2 to *, 3 to /, 4 to ^:");
     scanf("%d", &choice);
 
-    printf("%d", ope[choice](x, y));
+    printf("%d\n", ope[choice](x, y));
     return 0;
 }
