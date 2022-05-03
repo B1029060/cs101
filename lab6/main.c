@@ -28,9 +28,11 @@ int main() {
     printf("Enter two integer: ");
     scanf("%d", &x);
     scanf("%d", &y);
+    printf("%d.%d", x, y);
 
     printf("Enter 0 to +, 1 to -, 2 to *, 3 to /, 4 to ^:");
     scanf("%d", &choice);
+    printf("%d", choice);
 
     printf("%d", ope[choice](x, y));
     return 0;
