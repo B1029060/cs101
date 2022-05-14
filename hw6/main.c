@@ -51,14 +51,17 @@ node_t* add_node(node_t* head, int new_data) {
 node_t* del_node(node_t* head, int search_data) {
     node_t* p = NULL;
     int rem = 0;
+    int cnt = 1;
     while (head) {
         p = head;
         head = head->next_node;
+        if (cnt == 1 && p->data == search_data) p = head;
         if (head->data == search_data) {
             rem = head->next_node;
             p->next_node = rem;
             head = head->next_node;
         }
+        cnt++;
     }
     return p;
 }
