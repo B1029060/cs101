@@ -3,12 +3,12 @@
 
 
 int do_before_adding(int* i) {
-    return *i;
     *i+= 1;
+    return *i - 1;
 }
 int do_after_adding(int* i) {
     *i+= 1;
-    return *i - 1;
+    return *i;
 }    
 void check_result(int x, int z, int t_x, int t_z) {
     if (x == t_x && z == t_z) {
@@ -25,7 +25,7 @@ void test_do_before_adding() {
     printf("do_before_adding()\n");
     printf(" z=%d, x=%d, ", z, x);
     printf(" t_z=%d, t_x=%d\n", t_z, t_x);
-    check_result(x+1, z, t_x, t_z);
+    check_result(x, z, t_x, t_z);
 }
 void test_do_after_adding() {
     int x = 1;
