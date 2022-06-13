@@ -21,5 +21,6 @@ class ReplaceMyString {
 int main() {
     ReplaceMyString my;
     my.replaceString("IU", "IU is best");
+    my.replaceString("IU is best", "IU is best is best");
     return 0;
 }
